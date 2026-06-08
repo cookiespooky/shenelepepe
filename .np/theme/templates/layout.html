@@ -228,7 +228,6 @@
 <body class="{{ if $isHome }}is-home{{ else }}is-page{{ end }}">
   {{ template "header.html" . }}
 
-  {{- $pages := .Collections.nav_pages.Items }}
   {{- $groups := .Collections.nav_items_by_hub.Groups }}
 
   <aside class="mobile-nav" data-nav-panel aria-hidden="true">
@@ -236,25 +235,6 @@
       <nav class="mobile-nav-links mobile-docs-nav" aria-label="{{ index .Settings "ui_documentation_navigation" }}">
         <ul class="sidebar-list">
           <li class="sidebar-group"><a class="{{ if eq $.Page.Type "home" }}is-active{{ end }}" href="{{ $homePath }}">{{ $docsTitle }}</a></li>
-          {{- if $pages }}
-          <li class="sidebar-group">
-            <ul class="sidebar-sublist sidebar-root">
-              {{- range $pages }}
-                {{- if ne .Slug "footer" }}
-                {{- $hasHub := false -}}
-                {{- with (index .FM "hub") -}}
-                  {{- if gt (len .) 0 -}}
-                    {{- $hasHub = true -}}
-                  {{- end -}}
-                {{- end -}}
-                {{- if not $hasHub }}
-              <li><a class="{{ if eq .Slug $.Page.Slug }}is-active{{ end }}" href="{{ printf "%s%s" $.BaseURL .Path }}">{{ .Title }}</a></li>
-                {{- end }}
-                {{- end }}
-              {{- end }}
-            </ul>
-          </li>
-          {{- end }}
           {{- if $hubs }}
             {{- range $hubs }}
               {{- if ne .Slug "footer" }}
@@ -281,49 +261,6 @@
 
   <main class="wrap">
     <div class="layout">
-      <aside class="sidebar" aria-label="{{ index .Settings "ui_documentation_navigation" }}">
-        <ul class="sidebar-list">
-          <li class="sidebar-group"><a class="{{ if eq $.Page.Type "home" }}is-active{{ end }}" href="{{ $homePath }}">{{ $docsTitle }}</a></li>
-          {{- if $pages }}
-          <li class="sidebar-group">
-            <ul class="sidebar-sublist sidebar-root">
-              {{- range $pages }}
-                {{- if ne .Slug "footer" }}
-                {{- $hasHub := false -}}
-                {{- with (index .FM "hub") -}}
-                  {{- if gt (len .) 0 -}}
-                    {{- $hasHub = true -}}
-                  {{- end -}}
-                {{- end -}}
-                {{- if not $hasHub }}
-              <li><a class="{{ if eq .Slug $.Page.Slug }}is-active{{ end }}" href="{{ printf "%s%s" $.BaseURL .Path }}">{{ .Title }}</a></li>
-                {{- end }}
-                {{- end }}
-              {{- end }}
-            </ul>
-          </li>
-          {{- end }}
-          {{- if $hubs }}
-            {{- range $hubs }}
-              {{- if ne .Slug "footer" }}
-              {{- $isChildHub := false -}}
-              {{- with (index .FM "hub") -}}
-                {{- if gt (len .) 0 -}}
-                  {{- $isChildHub = true -}}
-                {{- end -}}
-              {{- end -}}
-              {{- if not $isChildHub }}
-              {{- $hub := . }}
-            <li class="sidebar-group" data-nav-hub-node data-slug="{{ $hub.Slug }}">
-              <a class="{{ if eq $hub.Slug $.Page.Slug }}is-active{{ end }}" href="{{ printf "%s%s" $.BaseURL $hub.Path }}">{{ $hub.Title }}</a>
-            </li>
-              {{- end }}
-              {{- end }}
-            {{- end }}
-          {{- end }}
-        </ul>
-      </aside>
-
       <div class="content-area">
         {{- if not $isHome }}
         <nav class="breadcrumb" aria-label="{{ index .Settings "ui_breadcrumb" }}">
