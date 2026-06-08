@@ -7,7 +7,7 @@ image: /media/notepub_cover.png
 related: ["start", "how-it-works", "seo", "publishing", "example-post"]
 ---
 
-# Создайте сайт из Obsidian за 5 минут
+# завтра я сброшу как минимум 4 батончика в яму со змеями
 
 Вы пишете заметки — получаете готовый сайт.  
 Без CMS, без серверов, без сложной настройки.
