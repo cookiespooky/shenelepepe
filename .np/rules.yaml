@@ -2,7 +2,7 @@ version: 1
 
 fields:
   required: ["type", "slug", "title"]
-  optional: ["description", "draft", "hub", "related", "order", "noindex", "jsonld", "tags"]
+  optional: ["description", "draft", "hub", "related", "order", "noindex", "jsonld", "tags", "eyebrow", "image", "image_alt", "cta_label", "cta_url", "secondary_label", "secondary_url", "display_title", "value", "note", "lead", "badges", "bullets", "facts", "style"]
   defaults:
     draft: false
 
@@ -13,6 +13,9 @@ fm_schema:
   order: number
   draft: boolean
   noindex: boolean
+  badges: string[]
+  bullets: string[]
+  facts: string[]
 
 types:
   home:
@@ -53,6 +56,48 @@ types:
   footer:
     template: "page.html"
     permalink: "/footer/"
+    include_in:
+      sitemap: false
+      search: false
+
+  home_hero:
+    template: "page.html"
+    permalink: "/_home/{{ slug }}/"
+    include_in:
+      sitemap: false
+      search: false
+
+  home_trust:
+    template: "page.html"
+    permalink: "/_home/{{ slug }}/"
+    include_in:
+      sitemap: false
+      search: false
+
+  home_stat:
+    template: "page.html"
+    permalink: "/_home/{{ slug }}/"
+    include_in:
+      sitemap: false
+      search: false
+
+  home_guides:
+    template: "page.html"
+    permalink: "/_home/{{ slug }}/"
+    include_in:
+      sitemap: false
+      search: false
+
+  home_guide:
+    template: "page.html"
+    permalink: "/_home/{{ slug }}/"
+    include_in:
+      sitemap: false
+      search: false
+
+  home_about:
+    template: "page.html"
+    permalink: "/_home/{{ slug }}/"
     include_in:
       sitemap: false
       search: false
@@ -196,6 +241,84 @@ collections:
       dir: "asc"
       nulls_last: true
     limit: 12
+
+  home_hero_section:
+    kind: "filter"
+    materialize: false
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["home_hero"]
+    sort:
+      by: "fm.order"
+      dir: "asc"
+      nulls_last: true
+    limit: 1
+
+  home_trust_section:
+    kind: "filter"
+    materialize: false
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["home_trust"]
+    sort:
+      by: "fm.order"
+      dir: "asc"
+      nulls_last: true
+    limit: 1
+
+  home_trust_stats:
+    kind: "filter"
+    materialize: false
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["home_stat"]
+    sort:
+      by: "fm.order"
+      dir: "asc"
+      nulls_last: true
+    limit: 12
+
+  home_guides_section:
+    kind: "filter"
+    materialize: false
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["home_guides"]
+    sort:
+      by: "fm.order"
+      dir: "asc"
+      nulls_last: true
+    limit: 1
+
+  home_guide_cards:
+    kind: "filter"
+    materialize: false
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["home_guide"]
+    sort:
+      by: "fm.order"
+      dir: "asc"
+      nulls_last: true
+    limit: 12
+
+  home_about_section:
+    kind: "filter"
+    materialize: false
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["home_about"]
+    sort:
+      by: "fm.order"
+      dir: "asc"
+      nulls_last: true
+    limit: 1
 
 sitemap:
   include_types: ["home", "page", "article", "hub"]

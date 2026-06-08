@@ -1,20 +1,146 @@
-<article class="content">
-  {{ .Body }}
-</article>
-
-{{- $hubs := .Collections.nav_hubs.Items -}}
-{{- if $hubs }}
-<section class="section">
-  <h2 class="section-title">{{ index .Settings "ui_home_hubs_title" }}</h2>
-  <div class="grid grid-3">
-    {{- range $hubs }}
-    <a class="card card-link" href="{{ printf "%s%s" $.BaseURL .Path }}">
-      <h3>{{ .Title }}</h3>
-      {{- if .Description }}
-      <p>{{ .Description }}</p>
+<div class="home-shell">
+  {{- range .Collections.home_hero_section.Items }}
+  {{- $ctaURL := index .FM "cta_url" -}}
+  {{- $ctaLabel := index .FM "cta_label" -}}
+  {{- $secondaryURL := index .FM "secondary_url" -}}
+  {{- $secondaryLabel := index .FM "secondary_label" -}}
+  <section class="home-hero-panel">
+    <div class="home-hero-copy">
+      {{- with index .FM "eyebrow" }}
+      <p class="home-kicker">{{ . }}</p>
       {{- end }}
-    </a>
-    {{- end }}
-  </div>
-</section>
-{{- end }}
+      <h1 class="home-display">{{ with index .FM "display_title" }}{{ . }}{{ else }}{{ .Title }}{{ end }}</h1>
+      {{- if .Description }}
+      <p class="home-lead">{{ .Description }}</p>
+      {{- end }}
+      {{- with index .FM "badges" }}
+      <ul class="home-badges">
+        {{- range . }}
+        <li>{{ . }}</li>
+        {{- end }}
+      </ul>
+      {{- end }}
+      {{- with index .FM "bullets" }}
+      <ul class="home-bullets">
+        {{- range . }}
+        <li>{{ . }}</li>
+        {{- end }}
+      </ul>
+      {{- end }}
+      <div class="home-actions">
+        {{- if $ctaURL }}
+        <a class="home-btn home-btn-primary" href="{{ $ctaURL }}">{{ $ctaLabel }}</a>
+        {{- end }}
+        {{- if $secondaryURL }}
+        <a class="home-btn home-btn-secondary" href="{{ $secondaryURL }}">{{ $secondaryLabel }}</a>
+        {{- end }}
+      </div>
+    </div>
+    <div class="home-hero-media">
+      {{- if .Image }}
+      <img class="home-hero-image" src="{{ .Image }}" alt="{{ index .FM "image_alt" }}" loading="eager" decoding="async" />
+      {{- else }}
+      <div class="home-hero-placeholder" aria-hidden="true"></div>
+      {{- end }}
+      {{- with index .FM "lead" }}
+      <div class="home-hero-note">{{ . }}</div>
+      {{- end }}
+    </div>
+  </section>
+  {{- end }}
+
+  {{- range .Collections.home_trust_section.Items }}
+  <section class="home-section">
+    <div class="home-section-head">
+      <p class="home-section-kicker">Преимущества</p>
+      <h2 class="home-section-title">{{ .Title }}</h2>
+      {{- if .Description }}
+      <p class="home-section-lead">{{ .Description }}</p>
+      {{- end }}
+      {{- with index .FM "lead" }}
+      <p class="home-section-note">{{ . }}</p>
+      {{- end }}
+    </div>
+    <div class="home-stats-grid">
+      {{- range $.Collections.home_trust_stats.Items }}
+      <article class="home-stat-card">
+        <p class="home-stat-label">{{ with index .FM "display_title" }}{{ . }}{{ else }}{{ .Title }}{{ end }}</p>
+        {{- with index .FM "value" }}
+        <p class="home-stat-value">{{ . }}</p>
+        {{- end }}
+        {{- if .Description }}
+        <p class="home-stat-description">{{ .Description }}</p>
+        {{- end }}
+        {{- with index .FM "note" }}
+        <p class="home-stat-note">{{ . }}</p>
+        {{- end }}
+      </article>
+      {{- end }}
+    </div>
+  </section>
+  {{- end }}
+
+  {{- range .Collections.home_guides_section.Items }}
+  <section class="home-section">
+    <div class="home-section-head">
+      <p class="home-section-kicker">Материалы</p>
+      <h2 class="home-section-title">{{ .Title }}</h2>
+      {{- if .Description }}
+      <p class="home-section-lead">{{ .Description }}</p>
+      {{- end }}
+    </div>
+    <div class="home-guide-grid">
+      {{- range $.Collections.home_guide_cards.Items }}
+      <article class="home-guide-card{{ with index .FM "style" }} home-guide-card-{{ . }}{{ end }}">
+        <a class="home-guide-link" href="{{ index .FM "cta_url" }}">
+          <div class="home-guide-body">
+            <h3>{{ with index .FM "display_title" }}{{ . }}{{ else }}{{ .Title }}{{ end }}</h3>
+            {{- if .Description }}
+            <p>{{ .Description }}</p>
+            {{- end }}
+          </div>
+          <div class="home-guide-media">
+            {{- if .Image }}
+            <img src="{{ .Image }}" alt="{{ index .FM "image_alt" }}" loading="lazy" decoding="async" />
+            {{- else }}
+            <span class="home-guide-arrow" aria-hidden="true">↗</span>
+            {{- end }}
+          </div>
+        </a>
+      </article>
+      {{- end }}
+    </div>
+  </section>
+  {{- end }}
+
+  {{- range .Collections.home_about_section.Items }}
+  {{- $ctaURL := index .FM "cta_url" -}}
+  {{- $ctaLabel := index .FM "cta_label" -}}
+  <section class="home-section home-about-panel">
+    <div class="home-about-media">
+      {{- if .Image }}
+      <img src="{{ .Image }}" alt="{{ index .FM "image_alt" }}" loading="lazy" decoding="async" />
+      {{- else }}
+      <div class="home-about-placeholder" aria-hidden="true"></div>
+      {{- end }}
+    </div>
+    <div class="home-about-copy">
+      <p class="home-section-kicker">Внутри шаблона</p>
+      <h2 class="home-section-title">{{ .Title }}</h2>
+      {{- if .Description }}
+      <p class="home-section-lead">{{ .Description }}</p>
+      {{- end }}
+      {{- with index .FM "facts" }}
+      <ul class="home-facts">
+        {{- range . }}
+        <li>{{ . }}</li>
+        {{- end }}
+      </ul>
+      {{- end }}
+      {{- if $ctaURL }}
+      <a class="home-btn home-btn-primary" href="{{ $ctaURL }}">{{ $ctaLabel }}</a>
+      {{- end }}
+    </div>
+  </section>
+  {{- end }}
+</div>
