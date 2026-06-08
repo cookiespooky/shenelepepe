@@ -1,0 +1,27 @@
+.DS_Store
+
+# Build outputs and caches
+.notepub/
+dist/
+artifacts/
+.np/dist/
+.np/bin/
+.np/generated/
+.np/config.publish.yaml
+.np/config.resolved.yaml
+.np/config.generated.yaml
+.np/config.effective.yaml
+
+# Local binaries and logs
+notepub
+*.log
+
+# Optional local env
+.env
+.env.*
+
+# Editor/system
+.idea/
+.vscode/
+.obsidian/
+*.swp
